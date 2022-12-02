@@ -5,5 +5,5 @@ This helm chart deploys a daemon set in your EKS cluster and collect data from t
 
 #### Installation
 
-    -   helm install heap-dump-exporter heap-dump-exporter/ -n <namespace> -f valurs.yaml
+    -   helm install heap-dump-exporter heap-dump-exporter/ -n <namespace> -f values.yml
  
