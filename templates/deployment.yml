@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: s3sync
+  name: {{ include "s3-sync.fullname" . }}
+  namespace: {{ .Values.namespace}}
+spec:
+  selector:
+    matchLabels:
+      app: s3sync
+  template:
+    metadata:
+      labels:
+        app: s3sync
+    spec:
+      containers:
+      - image: {{ .Values.image.repository }}
+        imagePullPolicy: {{ .Values.image.pullPolicy}}
+        name: {{ .Chart.Name }}
+        env:
+          - name: S3_BUCKET_NAME
+            value: {{ .Values.S3_HEAPDUMP_BUCKET}}
+        resources: {}
+        volumeMounts:
+        - mountPath: /app/log
+          name: data-volume
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+      - name: data-volume
+        hostPath:
+                path: /var/local
+                type: Directory
+

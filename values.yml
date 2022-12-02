@@ -1,0 +1,13 @@
+image:
+  repository: madeesha/s3sync
+  pullPolicy: IfNotPresent
+
+namespace: logging
+
+tolerations:
+  - key: "on-demand"
+    operator: "Exists"
+    effect: "NoSchedule"
+
+S3_HEAPDUMP_BUCKET: <YOUR_S3_BUCKET_NAME>
+
